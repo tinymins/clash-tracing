@@ -1,7 +1,7 @@
 version: '3'
 services:
   loki:
-    image: grafana/loki:2.4.2
+    image: grafana/loki:2.5.0
     container_name: loki
     volumes:
       - ./loki/data:/loki
@@ -20,12 +20,15 @@ services:
     container_name: vector
     depends_on:
       - loki
-  reporter:
-    build: .
-    environment:
-      CLASH_HOST: '192.168.88.201:9090'
-      CLASH_TOKEN: ''
-      VECTOR_ADDR: 'vector:9000'
-    container_name: reporter
+  traffic_scraper:
+    image: vi0oss/websocat:0.10.0
+    container_name: traffic_scraper
+    command: -v --autoreconnect-delay-millis 15000 autoreconnect:ws://$CLASH_HOST/traffic?token=$CLASH_TOKEN autoreconnect:tcp:vector:9000
+    depends_on:
+      - vector
+  tracing_scraper:
+    image: vi0oss/websocat:0.10.0
+    container_name: tracing_scraper
+    command: -v --autoreconnect-delay-millis 15000 autoreconnect:ws://$CLASH_HOST/profile/tracing?token=$CLASH_TOKEN autoreconnect:tcp:vector:9000
     depends_on:
       - vector

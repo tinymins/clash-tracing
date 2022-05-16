@@ -69,7 +69,7 @@
                 "showUnfilled": true,
                 "text": {}
             },
-            "pluginVersion": "8.5.0",
+            "pluginVersion": "8.5.2",
             "targets": [
                 {
                     "datasource": {
@@ -200,6 +200,7 @@
                     },
                     "expr": "{type=\"proxydial\"} | json | duration > 500000",
                     "legendFormat": "",
+                    "maxLines": 20,
                     "queryType": "range",
                     "refId": "A"
                 }
@@ -323,7 +324,7 @@
                 "showUnfilled": true,
                 "text": {}
             },
-            "pluginVersion": "8.5.0",
+            "pluginVersion": "8.5.2",
             "targets": [
                 {
                     "datasource": {
@@ -450,7 +451,7 @@
             "options": {
                 "legend": {
                     "calcs": [],
-                    "displayMode": "list",
+                    "displayMode": "hidden",
                     "placement": "bottom"
                 },
                 "tooltip": {
@@ -519,7 +520,7 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "8.5.0",
+            "pluginVersion": "8.5.2",
             "targets": [
                 {
                     "datasource": {
@@ -635,19 +636,9 @@
                         "type": "loki",
                         "uid": "GK8iCv-nk"
                     },
-                    "expr": "avg_over_time({type=\"dnsrequest\"} | json | unwrap duration [$__range]) by (type)",
-                    "legendFormat": "All",
+                    "expr": "avg_over_time({type=\"dnsrequest\"} | json | unwrap duration [$__range]) by (qType)",
+                    "legendFormat": "{{qType}}",
                     "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "loki",
-                        "uid": "OcHtJT-7k"
-                    },
-                    "expr": "avg_over_time({type=\"dnsrequest\"} | json | qType=\"A\" or qType=\"AAAA\" | unwrap duration [$__range]) by (type)",
-                    "hide": false,
-                    "legendFormat": "A,AAAA",
-                    "refId": "B"
                 }
             ],
             "title": "DNS 平均查询时间",
@@ -881,7 +872,7 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "8.5.0",
+            "pluginVersion": "8.5.2",
             "targets": [
                 {
                     "datasource": {

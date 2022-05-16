@@ -8,6 +8,6 @@ An example of a clash tracing exporter API.
 
 ### How to use
 
-1. modify `docker-compose.yaml` and start (`docker-compose up -d`)
+1. modify `.env` and start (`docker-compose up -d`)
 2. setup Grafana (add datasource)
 3. import `panels/dashboard.json` and `panels/logs.json` to Grafana
