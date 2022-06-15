@@ -21,7 +21,6 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 1,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -69,7 +68,7 @@
                 "showUnfilled": true,
                 "text": {}
             },
-            "pluginVersion": "8.5.2",
+            "pluginVersion": "9.0.0",
             "targets": [
                 {
                     "datasource": {
@@ -88,7 +87,7 @@
                     "id": "extractFields",
                     "options": {
                         "replace": true,
-                        "source": "line proxydial"
+                        "source": "Line"
                     }
                 },
                 {
@@ -161,7 +160,7 @@
                             },
                             {
                                 "id": "custom.displayMode",
-                                "value": "basic"
+                                "value": "color-text"
                             }
                         ]
                     }
@@ -191,7 +190,7 @@
                     }
                 ]
             },
-            "pluginVersion": "8.5.0",
+            "pluginVersion": "9.0.0",
             "targets": [
                 {
                     "datasource": {
@@ -208,44 +207,10 @@
             "title": "慢 Dial",
             "transformations": [
                 {
-                    "id": "reduce",
+                    "id": "extractFields",
                     "options": {
-                        "includeTimeField": false,
-                        "labelsToFields": true,
-                        "mode": "seriesToRows",
-                        "reducers": [
-                            "first"
-                        ]
-                    }
-                },
-                {
-                    "id": "filterByValue",
-                    "options": {
-                        "filters": [
-                            {
-                                "config": {
-                                    "id": "notEqual",
-                                    "options": {
-                                        "value": "id"
-                                    }
-                                },
-                                "fieldName": "Field"
-                            }
-                        ],
-                        "match": "any",
-                        "type": "include"
-                    }
-                },
-                {
-                    "id": "convertFieldType",
-                    "options": {
-                        "conversions": [
-                            {
-                                "destinationType": "number",
-                                "targetField": "duration"
-                            }
-                        ],
-                        "fields": {}
+                        "replace": true,
+                        "source": "Line"
                     }
                 },
                 {
@@ -257,21 +222,19 @@
                             "error": true,
                             "host": true,
                             "id": true,
-                            "proxy": false,
+                            "labels": true,
+                            "proxy": true,
                             "type": true,
                             "type_extracted": true
                         },
                         "indexByName": {
-                            "Field": 3,
-                            "First": 9,
                             "address": 0,
+                            "chain": 1,
                             "duration": 2,
-                            "error": 8,
                             "host": 4,
                             "id": 5,
-                            "proxy": 1,
-                            "type": 6,
-                            "type_extracted": 7
+                            "proxy": 3,
+                            "type": 6
                         },
                         "renameByName": {}
                     }
@@ -324,7 +287,7 @@
                 "showUnfilled": true,
                 "text": {}
             },
-            "pluginVersion": "8.5.2",
+            "pluginVersion": "9.0.0",
             "targets": [
                 {
                     "datasource": {
@@ -341,9 +304,7 @@
                     "id": "filterFieldsByName",
                     "options": {
                         "include": {
-                            "names": [
-                                "line rulematch"
-                            ]
+                            "names": []
                         }
                     }
                 },
@@ -351,7 +312,7 @@
                     "id": "extractFields",
                     "options": {
                         "replace": true,
-                        "source": "line rulematch"
+                        "source": "Line"
                     }
                 },
                 {
@@ -520,7 +481,7 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "8.5.2",
+            "pluginVersion": "9.0.0",
             "targets": [
                 {
                     "datasource": {
@@ -872,7 +833,7 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "8.5.2",
+            "pluginVersion": "9.0.0",
             "targets": [
                 {
                     "datasource": {
