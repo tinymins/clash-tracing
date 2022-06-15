@@ -9,7 +9,9 @@ services:
   grafana:
     image: grafana/grafana-oss:latest
     volumes:
-      - ./grafana:/var/lib/grafana
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/panels:/etc/dashboards
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
     ports:
       - "3000:3000"
     container_name: grafana
