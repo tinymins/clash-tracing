@@ -68,17 +68,19 @@
                 "showUnfilled": true,
                 "text": {}
             },
-            "pluginVersion": "9.0.0",
+            "pluginVersion": "9.4.7",
             "targets": [
                 {
                     "datasource": {
                         "type": "loki",
                         "uid": "GK8iCv-nk"
                     },
+                    "editorMode": "code",
                     "expr": "{type=\"proxydial\"}",
+                    "hide": false,
                     "legendFormat": "{{host}}",
-                    "refId": "A",
-                    "resolution": 1
+                    "queryType": "range",
+                    "refId": "A"
                 }
             ],
             "title": "域名访问次数",
@@ -128,7 +130,9 @@
                 "defaults": {
                     "custom": {
                         "align": "auto",
-                        "displayMode": "color-text",
+                        "cellOptions": {
+                            "type": "color-text"
+                        },
                         "filterable": true,
                         "inspect": false
                     },
@@ -159,8 +163,10 @@
                                 "value": "µs"
                             },
                             {
-                                "id": "custom.displayMode",
-                                "value": "color-text"
+                                "id": "custom.cellOptions",
+                                "value": {
+                                    "type": "color-text"
+                                }
                             }
                         ]
                     }
@@ -175,6 +181,7 @@
             "id": 8,
             "options": {
                 "footer": {
+                    "countRows": false,
                     "fields": "",
                     "reducer": [
                         "sum"
@@ -190,15 +197,16 @@
                     }
                 ]
             },
-            "pluginVersion": "9.0.0",
+            "pluginVersion": "9.4.7",
             "targets": [
                 {
                     "datasource": {
                         "type": "loki",
                         "uid": "GK8iCv-nk"
                     },
+                    "editorMode": "code",
                     "expr": "{type=\"proxydial\"} | json | duration > 500000",
-                    "legendFormat": "",
+                    "hide": false,
                     "maxLines": 20,
                     "queryType": "range",
                     "refId": "A"
@@ -223,7 +231,9 @@
                             "host": true,
                             "id": true,
                             "labels": true,
+                            "port": true,
                             "proxy": true,
+                            "reportIP": true,
                             "type": true,
                             "type_extracted": true
                         },
@@ -287,14 +297,17 @@
                 "showUnfilled": true,
                 "text": {}
             },
-            "pluginVersion": "9.0.0",
+            "pluginVersion": "9.4.7",
             "targets": [
                 {
                     "datasource": {
                         "type": "loki",
                         "uid": "GK8iCv-nk"
                     },
+                    "editorMode": "code",
                     "expr": "{type=\"rulematch\"}",
+                    "hide": false,
+                    "queryType": "range",
                     "refId": "A"
                 }
             ],
@@ -357,6 +370,8 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
@@ -412,8 +427,9 @@
             "options": {
                 "legend": {
                     "calcs": [],
-                    "displayMode": "hidden",
-                    "placement": "bottom"
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
                 },
                 "tooltip": {
                     "mode": "single",
@@ -426,8 +442,24 @@
                         "type": "loki",
                         "uid": "GK8iCv-nk"
                     },
+                    "editorMode": "code",
                     "expr": "avg_over_time({type=\"rulematch\"} | json | unwrap duration [$__range]) by (type)",
+                    "hide": false,
+                    "legendFormat": "Total",
+                    "queryType": "range",
                     "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "loki",
+                        "uid": "GK8iCv-nk"
+                    },
+                    "editorMode": "code",
+                    "expr": "avg_over_time({type=\"rulematch\"} | json | label_format result=`{{sub .duration .dnstime}}` | unwrap result [$__range]) by (type)",
+                    "hide": false,
+                    "legendFormat": "Exclude DNS",
+                    "queryType": "range",
+                    "refId": "B"
                 }
             ],
             "title": "规则匹配速度",
@@ -481,15 +513,17 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "9.0.0",
+            "pluginVersion": "9.4.7",
             "targets": [
                 {
                     "datasource": {
                         "type": "loki",
                         "uid": "OcHtJT-7k"
                     },
+                    "editorMode": "code",
                     "expr": "sum by (type) (sum_over_time({type=\"traffic\"} | json | unwrap down [$__interval]))",
-                    "legendFormat": "",
+                    "hide": false,
+                    "queryType": "range",
                     "refId": "A"
                 },
                 {
@@ -497,8 +531,10 @@
                         "type": "loki",
                         "uid": "OcHtJT-7k"
                     },
+                    "editorMode": "code",
                     "expr": "sum by (type) (sum_over_time({type=\"traffic\"} | json | unwrap up [$__interval]))",
                     "hide": false,
+                    "queryType": "range",
                     "refId": "B"
                 }
             ],
@@ -528,6 +564,8 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
@@ -584,7 +622,8 @@
                 "legend": {
                     "calcs": [],
                     "displayMode": "list",
-                    "placement": "bottom"
+                    "placement": "bottom",
+                    "showLegend": true
                 },
                 "tooltip": {
                     "mode": "single",
@@ -597,8 +636,11 @@
                         "type": "loki",
                         "uid": "GK8iCv-nk"
                     },
+                    "editorMode": "code",
                     "expr": "avg_over_time({type=\"dnsrequest\"} | json | unwrap duration [$__range]) by (qType)",
+                    "hide": false,
                     "legendFormat": "{{qType}}",
+                    "queryType": "range",
                     "refId": "A"
                 }
             ],
@@ -613,6 +655,8 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
@@ -669,7 +713,8 @@
                 "legend": {
                     "calcs": [],
                     "displayMode": "list",
-                    "placement": "bottom"
+                    "placement": "bottom",
+                    "showLegend": true
                 },
                 "tooltip": {
                     "mode": "single",
@@ -682,8 +727,11 @@
                         "type": "loki",
                         "uid": "GK8iCv-nk"
                     },
+                    "editorMode": "code",
                     "expr": "avg_over_time({type=\"proxydial\"} | json | unwrap duration [$__range]) by (proxy)",
+                    "hide": false,
                     "legendFormat": "{{proxy}}",
+                    "queryType": "range",
                     "refId": "A"
                 }
             ],
@@ -699,6 +747,8 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
@@ -755,7 +805,8 @@
                 "legend": {
                     "calcs": [],
                     "displayMode": "list",
-                    "placement": "bottom"
+                    "placement": "bottom",
+                    "showLegend": true
                 },
                 "tooltip": {
                     "mode": "single",
@@ -768,8 +819,11 @@
                         "type": "loki",
                         "uid": "OcHtJT-7k"
                     },
+                    "editorMode": "code",
                     "expr": "avg by (type) (sum_over_time({type=\"traffic\"} | json | unwrap up [$__interval]))",
+                    "hide": false,
                     "legendFormat": "Upload",
+                    "queryType": "range",
                     "refId": "A"
                 },
                 {
@@ -777,9 +831,11 @@
                         "type": "loki",
                         "uid": "OcHtJT-7k"
                     },
+                    "editorMode": "code",
                     "expr": "avg by (type) (sum_over_time({type=\"traffic\"} | json | unwrap down [$__interval]))",
                     "hide": false,
                     "legendFormat": "Download",
+                    "queryType": "range",
                     "refId": "B"
                 }
             ],
@@ -833,15 +889,17 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "9.0.0",
+            "pluginVersion": "9.4.7",
             "targets": [
                 {
                     "datasource": {
                         "type": "loki",
                         "uid": "OcHtJT-7k"
                     },
+                    "editorMode": "code",
                     "expr": "sum by (type) (rate({type=\"dnsrequest\"}[$__interval]))",
-                    "legendFormat": "",
+                    "hide": false,
+                    "queryType": "range",
                     "refId": "A"
                 }
             ],
